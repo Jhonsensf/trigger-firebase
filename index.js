@@ -1,5 +1,5 @@
-"use strict";
-const admin = require("firebase-admin");
+'use strict';
+const admin = require('firebase-admin');
 var Trigger = global.TriggerClass;
 
 class triggerFirebase extends Trigger {
@@ -8,12 +8,11 @@ class triggerFirebase extends Trigger {
   }
 
   start() {
-
     let _this = this;
     let serviceAccount = require(_this.params.config.serviceAccount);
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount),
-      databaseURL: _this.params.config.databaseURL,
+      databaseURL: _this.params.config.databaseURL
     });
 
     let db = admin.database();
@@ -25,10 +24,11 @@ class triggerFirebase extends Trigger {
         const checkCalendar = true;
         const customValues = snapshot.val();
 
-        _this.startChain(checkCalendar, inputValues, customValues)
-          .then(() => { })
+        _this
+          .startChain(checkCalendar, inputValues, customValues)
+          .then(() => {})
           .catch(err => {
-            _this.logger.error("startChain error (triggerFirebase):", err);
+            _this.logger.error('startChain error (triggerFirebase):', err);
           });
       }
     });
